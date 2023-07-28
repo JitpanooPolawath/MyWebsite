@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Jitpanoo Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="header">
+    <div class="container">
+        <nav>
+            <h1 class="colorfont">Jitpanoo Portfolio</h1>
+            <ul id="sidemenu">
+                <!-- redirect -->
+                <li><a href="#header">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#Portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <i class="fa-solid fa-x" style="color:white" onclick="closemenu()"></i>
+            </ul>
+            <i class="fa-solid fa-bars" style="color:white" onclick="openmenu()"></i>
+        </nav>
+    </div>
+    <div class="header-text">
+        <h1>Hello, I'm <span>Jitpanoo Polawath</span><br> welcome to my Portfolio</h1>
+    </div>
+</div>
+<!-------about-->
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <!-- change image -->
+                 <img src="images/Lo.png">
+            </div>   
+            <div class="about-col-2">
+                <h1 class="subtitle">About Me</h1>
+                <p class="par">
+                    The shoes had been there for as long as anyone could remember. In fact, it was 
+                    difficult for anyone to come up with a date they had first appeared. 
+                    It had seemed they'd always been there and yet they seemed so out of place. Why nobody
+                     had removed them was a question that had been asked time and again, but while they all thought it,
+                      nobody had ever found the energy to actually do it. So, the shoes remained on the steps, 
+                      out of place in one sense, but perfectly normal in another.</p>
+                <div class="tab-titles">
+                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links" onclick="opentab('education')">Education</p>
+                </div>
+                <div class="tab-contents active-tab" id="skills">
+                    <ul>
+                        <li><span>UI/UX</span><br>Designing web/App interfaces</li>
+                        <li><span>Web development</span><br>Web app development</li>
+                        <li><span>Game development</span><br> Game development</li>
+                    </ul>
+                </div>
+                <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>2022-2025 Undergraduate</span><br>B.Sc at University of Victoria</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-------portfolio-->
+    <div id="Portfolio">
+        <div class="container-port">
+            <h1 class="subtitle">My Work</h1>
+            <div class="work-list">
+                <div class="work">
+                    <!-- change image -->
+                    <img src="images/Snake.png">
+                    <div class="layer">
+                        <h3>SDL Snake Game</h3>
+                        <p>Description</p>
+                        <!-- add link to github-->
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <!-- change image -->
+                    <img src="images/Space-Invader.png">
+                    <div class="layer">
+                        <h3>OpenGl Space Invader</h3>
+                        <p>Description</p>
+                        <!-- add link to github-->
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <!-- change image -->
+                    <img src="images/website2.png">
+                    <div class="layer">
+                        <h3>Blog website</h3>
+                        <p>Description</p>
+                        <!-- add link to github-->
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- add link to more project/github-->
+            <a href="https://github.com/Pandaser?tab=repositories" class="btn">See More</a>
+        </div>
+    </div>
+</div>
+<!---contact-->
+<div id="contact">
+    <div class="container2">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="subtitle">Contact Me</h1>
+                <p><i class="fa-solid fa-envelope"></i> jitpanoopolawath@gmail.com</p>
+                <p><i class="fa-solid fa-phone"></i> 778 667 0070</p>
+                <div class="social-icons">
+                    <!-- add link to github-->
+                    <a href="https://github.com/Pandaser"><i class="fa-brands fa-github"></i></a>
+                    <!-- add link to instagram-->
+                    <a href="https://www.instagram.com/potorestrse/?next=%2F"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <!-- add link to download cv-->
+                <a href="images/my-cv.pdf" download class="btn btn2">Download CV</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/832e10af1c.js" crossorigin="anonymous"></script>
+
+<script>
+    
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+
+    function opentab(tabname){
+        for(tablink of tablinks){
+            tablink.classList.remove("active-link")
+        }
+        for(tabcontent of tabcontents){
+            tabcontent.classList.remove("active-tab")
+        }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+
+</script>
+
+<script>
+    var sidemen = document.getElementById("sidemenu");
+
+    function openmenu(){
+        sidemen.style.right="0";
+    }
+    function closemenu(){
+        sidemen.style.right="-200px";
+    }
+
+</script>
+
+</body>
+</html>
