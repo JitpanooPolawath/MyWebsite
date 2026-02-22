@@ -1,161 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="x-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
-    <title>Jitpanoo Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jitpanoo Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f2ed;
+      --ink: #1a1814;
+      --muted: #7a7570;
+      --accent: #c8502a;
+      --border: #ddd9d3;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 3rem 2rem 2rem;
+      max-width: 760px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    header p.tagline {
+      margin-top: 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Carousel ── */
+    .carousel { position: relative; }
+
+    .carousel-track-wrapper {
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+    }
+
+    .carousel-slide iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active iframe { pointer-events: auto; }
+
+    /* Arrow buttons */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 2.4rem;
+      height: 2.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .carousel-btn:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--bg);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .carousel-btn.prev { left: -1.2rem; }
+    .carousel-btn.next { right: -1.2rem; }
+    .carousel-btn svg  { width: 1rem; height: 1rem; }
+
+    /* Counter + title below player */
+    .carousel-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.9rem;
+    }
+
+    .carousel-title   { font-size: 0.9rem; color: var(--ink); }
+    .carousel-counter { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ── About ── */
+    .about-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .about-text p { color: #3d3a35; font-size: 0.95rem; margin-bottom: 0.85rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+
+    .tag {
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .links { display: flex; gap: 1.5rem; margin-top: 1.4rem; }
+
+    .links a {
+      font-size: 0.85rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .links2 a {
+      font-size: 0.85rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .links2 a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    @media (max-width: 520px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .carousel-btn.prev { left: 0.3rem; }
+      .carousel-btn.next { right: 0.3rem; }
+    }
+  </style>
 </head>
 <body>
-<div id="header">
-    <div class="container">
-        <nav>
-            <h1 class="colorfont">Jitpanoo Portfolio</h1>
-            <ul id="sidemenu">
-                <!-- redirect -->
-                <li><a href="#header">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#Portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <i class="fa-solid fa-x" style="color:white" onclick="closemenu()"></i>
-            </ul>
-            <i class="fa-solid fa-bars" style="color:white" onclick="openmenu()"></i>
-        </nav>
-    </div>
-    <div class="header-text">
-        <h1>Hello, I'm <span>Jitpanoo Polawath</span><br> welcome to my Portfolio</h1>
-    </div>
-</div>
-<!-------about-->
-<div id="about">
-    <div class="container">
-        <div class="row">
-            <div class="about-col-1">
-                <!-- change image -->
-                 <img src="images/Lo.png">
-            </div>   
-            <div class="about-col-2">
-                <h1 class="subtitle">About Me</h1>
-                <p class="par">
-                    The shoes had been there for as long as anyone could remember. In fact, it was 
-                    difficult for anyone to come up with a date they had first appeared. 
-                    It had seemed they'd always been there and yet they seemed so out of place. Why nobody
-                     had removed them was a question that had been asked time and again, but while they all thought it,
-                      nobody had ever found the energy to actually do it. So, the shoes remained on the steps, 
-                      out of place in one sense, but perfectly normal in another.</p>
-                <div class="tab-titles">
-                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                    <p class="tab-links" onclick="opentab('education')">Education</p>
-                </div>
-                <div class="tab-contents active-tab" id="skills">
-                    <ul>
-                        <li><span>UI/UX</span><br>Designing web/App interfaces</li>
-                        <li><span>Web development</span><br>Web app development</li>
-                        <li><span>Game development</span><br> Game development</li>
-                    </ul>
-                </div>
-                <div class="tab-contents" id="education">
-                    <ul>
-                        <li><span>2022-2025 Undergraduate</span><br>B.Sc at University of Victoria</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-------portfolio-->
-    <div id="Portfolio">
-        <div class="container-port">
-            <h1 class="subtitle">My Work</h1>
-            <div class="work-list">
-                <div class="work">
-                    <!-- change image -->
-                    <img src="images/Snake.png">
-                    <div class="layer">
-                        <h3>SDL Snake Game</h3>
-                        <p>Description</p>
-                        <!-- add link to github-->
-                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <div class="work">
-                    <!-- change image -->
-                    <img src="images/Space-Invader.png">
-                    <div class="layer">
-                        <h3>OpenGl Space Invader</h3>
-                        <p>Description</p>
-                        <!-- add link to github-->
-                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <div class="work">
-                    <!-- change image -->
-                    <img src="images/website2.png">
-                    <div class="layer">
-                        <h3>Blog website</h3>
-                        <p>Description</p>
-                        <!-- add link to github-->
-                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-            </div>
-            <!-- add link to more project/github-->
-            <a href="https://github.com/Pandaser?tab=repositories" class="btn">See More</a>
-        </div>
-    </div>
-</div>
-<!---contact-->
-<div id="contact">
-    <div class="container2">
-        <div class="row">
-            <div class="contact-left">
-                <h1 class="subtitle">Contact Me</h1>
-                <p><i class="fa-solid fa-envelope"></i> jitpanoopolawath@gmail.com</p>
-                <p><i class="fa-solid fa-phone"></i> 778 667 0070</p>
-                <div class="social-icons">
-                    <!-- add link to github-->
-                    <a href="https://github.com/Pandaser"><i class="fa-brands fa-github"></i></a>
-                    <!-- add link to instagram-->
-                    <a href="https://www.instagram.com/potorestrse/?next=%2F"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-                <!-- add link to download cv-->
-                <a href="images/my-cv.pdf" download class="btn btn2">Download CV</a>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script src="https://kit.fontawesome.com/832e10af1c.js" crossorigin="anonymous"></script>
+  <header>
+    <h1>Hello, I'm <span>Jitpanoo (Jay).</span></h1>
+    <p class="tagline">Data analyst · Data engineer · Developer</p>
+  </header>
+
+  <main>
+
+    <!-- Video Section -->
+    <section>
+      <p class="section-label">My projects</p>
+
+      <div class="carousel">
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="carouselTrack">
+
+            <div class="carousel-slide active">
+              <img src="./images/ETL.jpeg" alt="ETL pipeline airflow"  width="690" height="400">
+            </div>
+
+            <div class="carousel-slide">
+              <img src="./images/Ambi.jpeg" alt="Ambibook page"  width="700" height="400">
+            </div>
+
+            <div class="carousel-slide">
+              <iframe src="https://www.youtube.com/embed/fHAZQPnW7Ug?si=0I1JsngZNeJ8Rf5P"
+                title="Microbusiness Density Predictor"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="carousel-slide">
+              <iframe src="https://www.youtube.com/embed/Sm6okiMuB8U?si=90UGqRosF2JnwEhX"
+                title="Database-from-scratch"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="carousel-btn prev" id="prevBtn" aria-label="Previous video" disabled>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="10 2 4 8 10 14"/>
+          </svg>
+        </button>
+
+        <button class="carousel-btn next" id="nextBtn" aria-label="Next video">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 2 12 8 6 14"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-meta">
+        <span id="carouselTitle" class="carousel-title"><div class='links2'><a href="https://github.com/JitpanooPolawath/mobi">Mobi-Roger-Data-pipeline - Airflow diagram</a></div></span>
+        <span id="carouselCounter" class="carousel-counter">1 / 4</span>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- About Section -->
+    <section>
+      <p class="section-label">About Me</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <h2>Nice to meet you.</h2>
+           <h4>My name is Jitpanoo (Jay) Polawath.</h4>
+          <p>
+            I'm a data analysis, data engineer, and backend developer. 
+            I love to build ETL pipelines that connect communities and bring beautiful visualization to life.
+          </p>
+          <p>
+            My love for computer science originated from the endless ways we can interact and connect with each other, 
+            through computer art, music, and ideas. 
+          </p>
+          <p>
+            When I'm not building a project, you'll find me volunteering at the UVIC GC, reading sci-fi books or learning more about public transportation.
+          </p>
+          <div class="tags">
+            <span class="tag">Data analysis</span>
+            <span class="tag">Data Engineer</span>
+            <span class="tag">Testing and QA</span>
+            <span class="tag">Software development</span>
+          </div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/jitpanoo-polawath/">Linkedin</a>
+            <a href="https://github.com/JitpanooPolawath?tab=repositories">GitHub</a>
+            <a href="https://www.kaggle.com/jitpanoopolawath">Kaggle</a>
+            <a href="mailto:jitpanoopolawath@gmail.com">Email</a>
+            <a href="./jitpanoo_resume.pdf" download>Resume</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
 <script>
-    
-    var tablinks = document.getElementsByClassName("tab-links");
-    var tabcontents = document.getElementsByClassName("tab-contents");
+    (() => {
+      // ✏️ UPDATE THESE — one title per slide, in order
+      const titles = [
+        '<div class="links2"><a href="https://github.com/JitpanooPolawath/mobi">Mobi-Roger-Data-pipeline - Airflow diagram</a></div>',
+        '<div class="links2"><a href="https://github.com/JitpanooPolawath/AmbiBook">AmbiBook</a></div>',
+        '<div class="links2"><a href="https://www.kaggle.com/code/jitpanoopolawath/godaddy">Microbusiness Density Predictor</a></div>',
+        '<div class="links2"><a href="https://github.com/JitpanooPolawath/Database_from_scratch">Database-from-scratch</a></div>'
+      ];
 
-    function opentab(tabname){
-        for(tablink of tablinks){
-            tablink.classList.remove("active-link")
-        }
-        for(tabcontent of tabcontents){
-            tabcontent.classList.remove("active-tab")
-        }
-        event.currentTarget.classList.add("active-link");
-        document.getElementById(tabname).classList.add("active-tab");
-    }
+      const track     = document.getElementById('carouselTrack');
+      const slides    = Array.from(track.querySelectorAll('.carousel-slide'));
+      const prevBtn   = document.getElementById('prevBtn');
+      const nextBtn   = document.getElementById('nextBtn');
+      const titleEl   = document.getElementById('carouselTitle');
+      const counterEl = document.getElementById('carouselCounter');
+      const total     = slides.length;
+      let current     = 0;
 
+      function goTo(index) {
+        slides[current].classList.remove('active');
+        current = index;
+        slides[current].classList.add('active');
+        track.style.transform = `translateX(-${current * 100}%)`;
+        titleEl.innerHTML = titles[current];
+        counterEl.textContent = `${current + 1} / ${total}`;
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === total - 1;
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      // Keyboard arrow keys
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft'  && current > 0)           goTo(current - 1);
+        if (e.key === 'ArrowRight' && current < total - 1)   goTo(current + 1);
+      });
+    })();
 </script>
 
-<script>
-    var sidemen = document.getElementById("sidemenu");
 
-    function openmenu(){
-        sidemen.style.right="0";
-    }
-    function closemenu(){
-        sidemen.style.right="-200px";
-    }
-
-</script>
 
 </body>
 </html>
